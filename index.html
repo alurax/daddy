@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Daddy!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: linear-gradient(135deg, #ffe4e1 0%, #fffbe6 100%);
+      color: #5e4747;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Open Sans', sans-serif;
+      margin: 0;
+    }
+    .container {
+      background: rgba(255,255,255,0.92);
+      padding: 24px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(209,109,109,0.10);
+      text-align: center;
+      width: 95vw;
+      max-width: 400px;
+    }
+    .photo {
+      width: 80vw;
+      max-width: 260px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+      border: 3px solid #d16d6d;
+      box-shadow: 0 2px 10px rgba(209,109,109,0.10);
+    }
+    input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      font-size: 1.1em;
+      border-radius: 8px;
+      border: 1px solid #d16d6d;
+      margin-bottom: 14px;
+      background: #fffbe6;
+      color: #5e4747;
+    }
+    button {
+      padding: 10px 24px;
+      font-size: 1.1em;
+      border-radius: 8px;
+      border: none;
+      background: #d16d6d;
+      color: #fff;
+      cursor: pointer;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 8px rgba(209,109,109,0.12);
+      transition: background 0.22s;
+    }
+    button:active {
+      background: #b34b4b;
+    }
+    .error {
+      color: #ff4d4d;
+      margin-bottom: 10px;
+    }
+    .gallery {
+      display: flex;
+      overflow-x: auto;
+      gap: 12px;
+      padding-bottom: 12px;
+      margin-top: 20px;
+      scrollbar-width: thin;
+      scrollbar-color: #d16d6d #ffe4e1;
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+    }
+    .gallery::-webkit-scrollbar {
+      height: 7px;
+      background: #ffe4e1;
+    }
+    .gallery::-webkit-scrollbar-thumb {
+      background: #d16d6d;
+      border-radius: 6px;
+    }
+    .gallery img {
+      width: 90px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 2px solid #d16d6d;
+      box-shadow: 0 1px 6px rgba(209,109,109,0.10);
+      flex: 0 0 auto;
+      background: #fffbe6;
+      transition: transform 0.18s;
+    }
+    .gallery img.portrait {
+      object-fit: contain;
+      background: #fffbe6;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    @media (max-width: 500px) {
+      .container { padding: 10px; border-radius: 14px;}
+      .photo { max-width: 90vw; }
+      .gallery img { width: 65px; height: 65px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="main-container">
+    <!-- First prompt: What's your name? -->
+    <div id="step1">
+      <div style="font-size:1.2em; margin-bottom:10px;">What's your name?</div>
+      <input type="text" id="userNameInput" placeholder="Enter your name">
+      <br>
+      <button onclick="submitUserName()">Submit</button>
+      <div id="errorName" class="error"></div>
+    </div>
+    <!-- Step 2 and 3 will be injected by JS -->
+  </div>
+
+  <!-- Music player (hidden until success) -->
+  <audio id="bdayMusic" src="music/Kanlungan - Noel Cabangon (Lyrics) 🎵 _ Pana-panahon ang pagkakataon.mp3" loop></audio>
+
+  <script>
+    let userName = "";
+
+    function submitUserName() {
+      const input = document.getElementById('userNameInput').value.trim();
+      const errorName = document.getElementById('errorName');
+      if (input === "") {
+        errorName.textContent = "Please enter your name!";
+      } else {
+        userName = input;
+        showBabyPrompt();
+      }
+    }
+
+    function showBabyPrompt() {
+      document.getElementById('main-container').innerHTML = `
+        <img src="images/296202467_474925524472269_1411938171063136008_n.jpg" 
+             alt="Baby photo" class="photo" id="baby-photo">
+        <div>
+          <div style="font-size:1.2em; margin-bottom:10px;">Type the name of this baby</div>
+          <input type="text" id="nameInput" placeholder="Enter name here">
+          <br>
+          <button onclick="checkName()">Submit</button>
+          <div id="errorMsg" class="error"></div>
+        </div>
+      `;
+    }
+
+    const correctName = "alraf"; // <-- Change to the correct name!
+    function checkName() {
+      const input = document.getElementById('nameInput').value.trim().toLowerCase();
+      const errorMsg = document.getElementById('errorMsg');
+      if (input === correctName.toLowerCase()) {
+        showGreeting();
+      } else {
+        errorMsg.textContent = "That's not correct, try again!";
+      }
+    }
+
+    function showGreeting() {
+      document.getElementById('main-container').innerHTML = `
+        <h2>🎉 Happy Birthday, Dade! 🎉</h2>
+        <p>Hi <strong>${userName}</strong>!</p>
+        <p>De, salamat po sa lahat lahat. Walang salita na makakapagsabi kung gaano po ako nagpapasalamat sa inyo. Sa pagsisikap mo simula noon, sa pagpapalaki sa amin, sa pagturo ng tamang asal at kung papaano ang tamang pakikipagsalamuha sa iba.
+        Happy Birthday de! Hiling ko na sana ay bigyan ka pa ni Lord ng malakas na pangangatawan at maayos na kalusugan. Ingatan mo po ang sarili mo palagi de, piliin mo din po lagi maging masaya. Huwag mo kakalimutan na andito lang kami mga anak mo na 
+        laging nasa likod mo. Mahal na mahal ka namin de. Pangako ko na susuklian ko lahat ng paghihirap mo. Sa edad ko ngayon de, mahirap para sakin na isipin naka asa padin ako sa inyo. Gusto ko tuumulong sa kahit anong paraan na pwede. I love you dade! Happy Birthday! </p>
+        <div class="gallery">
+          <img src="images/inside/1.jpg" alt="Gallery 1">
+          <img src="images/inside/2.jpg" alt="Gallery 2">
+          <img src="images/inside/3.jpg" alt="Gallery 3">
+          <img src="images/inside/4.jpg" alt="Gallery 4">
+          <img src="images/inside/5.jpg" alt="Gallery 5">
+          <img src="images/inside/6.jpg" alt="Gallery 6">
+          <img src="images/inside/7.jpg" alt="Gallery 7">
+          <img src="images/inside/8.jpg" alt="Gallery 8">
+          <img src="images/inside/9.jpg" alt="Gallery 9">
+          <img src="images/inside/10.jpg" alt="Gallery 10">
+          <img src="images/inside/11.jpg" alt="Gallery 11" class="portrait">
+          <img src="images/inside/12.jpg" alt="Gallery 12">
+        </div>
+      `;
+      // Play music
+      const audio = document.getElementById('bdayMusic');
+      audio.play();
+    }
+  </script>
+</body>
+</html>
